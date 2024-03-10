@@ -1,10 +1,17 @@
 #!/usr/bin/python3
+"""this module defines a base class for
+   all models in our hbnb clone
+"""
+
 
 import uuid
 from datetime import datetime
 
 
 class BaseModel:
+
+
+"""A base class for all hbnb models"""
     def __init__(self, **kwagrs):
         """Initialize BaseModel instance."""
         self.id = str(uuid.uuid4())
