@@ -3,27 +3,29 @@
    all models in our hbnb clone
 """
 
-
+import models
 import uuid
 from datetime import datetime
 
 
 class BaseModel:
-
-
     """A base class for all models"""
-    def __init__(self, **kwargs):
+
+    def __init__(self, *args, **kwargs):
         """Initialize BaseModel instance."""
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
         if kwargs:
             for ky, val in kwargs.items():
                 if ky in ['created_at', 'updated_at']:
-                   # Convert strings to datetime objects
-                    setattr(self, ky, datetime.strptime(val, "%Y-%m-%dT%H:%M:%S.%f"))
+                    """Convert strings to datetime objects"""
+                    setattr(self, ky, datetime.strptime(val, time_format))
                 else:
                     self.__dict__[ky] = val
+        else:
+            models.storage.new(self)
 
     def __str__(self):
         """Return a string representation of the object."""
@@ -34,6 +36,7 @@ class BaseModel:
            updated_at with the current datetime.
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Return a dictionary containing all
