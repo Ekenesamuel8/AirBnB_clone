@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """module for the command interpreter."""
 import cmd
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -51,8 +52,8 @@ class HBNBCommand(cmd.Cmd):
             return
     
         try:
-            class_name = args[0]
-            if len(args) < 2:
+            class_name = command[0]
+            if len(command) < 2:
                 print("** instance id missing **")
                 return
             instance_id = args[1]
